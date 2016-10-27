@@ -34,7 +34,7 @@ public class MessagingService extends FirebaseMessagingService {
         Map<String, String> data = remoteMessage.getData();
         NotificationManager notificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        setContentTextAndMultiline(builder, options.getTextLines(), options.getSummary());
+        setContentTextAndMultiline(builder, options);
         setOnClick(builder, data);
         Notification notification;
         if (Build.VERSION.SDK_INT <= 15) {
@@ -47,9 +47,16 @@ public class MessagingService extends FirebaseMessagingService {
         notificationManager.notify(options.getId(), notification);
     }
 
-    private void setContentTextAndMultiline(Builder builder, String[] textLines, String summary) {
-        if(textLines.length == 0)
+    private void setContentTextAndMultiline(Builder builder, Options options) {
+        String text = options.getText();
+        if(text != null && !text.isEmpty()){
+            builder.setContentText(text).setTicker(text);
             return;
+        }
+        String[] textLines = options.getTextLines();
+        if(textLines == null || textLines.length == 0) {
+            return;
+        }
         if(textLines.length == 1) {
             builder.setContentText(textLines[0]).setTicker(textLines[0]);
             return;
@@ -57,6 +64,7 @@ public class MessagingService extends FirebaseMessagingService {
         InboxStyle inboxStyle = new InboxStyle(builder);
         for(String line : textLines)
             inboxStyle.addLine(line);
+        String summary = options.getSummary();
         inboxStyle.setSummaryText(summary);
         builder.setContentText(summary).setTicker(summary);
     }

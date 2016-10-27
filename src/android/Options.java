@@ -34,8 +34,14 @@ public class Options {
         }
         this.id = getInt(options, "id");
         this.title = getString(options, "title");
+        if(this.title == null){
+            Resources resource = context.getResources();
+            this.title = resource.getText(resource.getIdentifier("app_name",
+                "string", context.getPackageName())).toString();
+        }
         this.autoCancel = getBool(options, "autoCancel", true);
         this.summary = getString(options, "summary");
+        this.text = getString(options, "text");
         this.textLines = getStringArray(options, "textLines");
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
@@ -46,6 +52,7 @@ public class Options {
     protected String summary;
     protected boolean autoCancel = true;
     protected String[] textLines;
+    protected String text;
     protected int smallIconResourceId;
     protected android.graphics.Bitmap largeIconBitmap;
     protected Context context;
@@ -68,6 +75,10 @@ public class Options {
 
     public String[] getTextLines() {
         return textLines;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public int getSmallIconResourceId() {
@@ -148,17 +159,21 @@ public class Options {
     }
 
     protected String getString(JSONObject options, String attributeName){
+        return getString(options, attributeName, null);
+    }
+
+    protected String getString(JSONObject options, String attributeName, String defaultValue){
         if(options.isNull(attributeName))
-            return null;
+            return defaultValue;
         try {
             String string = options.getString(attributeName);
             if(string.isEmpty())
-                return null;
+                return defaultValue;
             return string;
         } catch (JSONException e){
             e.printStackTrace();
         }
-        return null;
+        return defaultValue;
     }
 
     protected boolean getBool(JSONObject options, String attributeName, boolean defaultValue) {
