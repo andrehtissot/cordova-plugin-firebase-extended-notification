@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-firebase-extended-notification"
+        version="1.0.0">
+
+    <name>Firebase Extended Notification Cordova Plugin</name>
+
+    <description>Simple extended message from server as "data"</description>
+
+    <repo>https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification.git</repo>
+
+    <keywords>notification, stackable, groupable, summarized, cordova, android, push, firebase</keywords>
+
+    <license>MIT</license>
+
+    <author>André Augusto Tissot</author>
+
+    <!-- cordova -->
+    <engines>
+        <engine name="cordova-android" version=">=4.0.0" />
+    </engines>
+
+    <!-- dependencies -->
+    <dependency id="com.gae.scaffolder.plugin.FCMPlugin" url="https://github.com/fechanique/cordova-plugin-fcm" commit="f80f44c156dde974f271e24258522bdbca5b17b7"/>
+
+    <!-- android -->
+    <platform name="android">
+        <framework src="src/android/FirebaseExtendedNotification.gradle" custom="true" type="gradleReference"/>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application" after="MainActivity">
+            <service android:name="com.andretissot.firebaseextendednotification.MessagingService">
+                <intent-filter>
+                    <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                </intent-filter>
+            </service>
+        </config-file>
+        <source-file
+            src="src/android/MessagingService.java"
+            target-dir="src/com/andretissot/firebaseextendednotification" />
+        <source-file
+            src="src/android/AssetUtil.java"
+            target-dir="src/com/andretissot/firebaseextendednotification" />
+    </platform>
+</plugin>

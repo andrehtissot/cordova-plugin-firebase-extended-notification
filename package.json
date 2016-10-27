@@ -1,0 +1,36 @@
+{
+  "name": "cordova-plugin-firebase-extended-notification",
+  "cordova_name": "Firebase Extended Notification Cordova Plugin",
+  "version": "1.0.0",
+  "description": "Simple notification message from server as \"data\" that allows more options as how it will apear to the notified user.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification"
+  },
+  "keywords": [
+    "notification",
+    "stackable",
+    "groupable",
+    "summarized",
+    "cordova",
+    "ecosystem:cordova",
+    "cordova-android",
+    "push",
+    "firebase",
+    "android",
+    "cordova"
+  ],
+  "platforms": [
+    "android"
+  ],
+  "engines": [],
+  "dependencies": {
+    "cordova-plugin-fcm": "fechanique/cordova-plugin-fcm#f80f44c156dde974f271e24258522bdbca5b17b7"
+  },
+  "author": "André Augusto Tissot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification/issues"
+  },
+  "homepage": "https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification/blob/master/README.md"
+}
