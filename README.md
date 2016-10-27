@@ -20,7 +20,7 @@ This plugin allows a nicer notification without cordova configurations, like the
 {
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
   "data" : {
-    "valuesToShowWhenClickedOn" : 111,
+    "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
       "title" : "Title test",
       "id" : 4,
@@ -38,7 +38,7 @@ Or if you want more than one line of text when notification is "opened":
 {
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
   "data" : {
-    "valuesToShowWhenClickedOn" : 111,
+    "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
       "title" : "Title test",
       "id" : 4,
