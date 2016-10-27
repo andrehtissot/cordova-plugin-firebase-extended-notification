@@ -23,7 +23,7 @@
     </engines>
 
     <!-- dependencies -->
-    <dependency id="com.gae.scaffolder.plugin.FCMPlugin" url="https://github.com/fechanique/cordova-plugin-fcm" commit="f80f44c156dde974f271e24258522bdbca5b17b7"/>
+    <dependency id="cordova-plugin-fcm" url="https://github.com/fechanique/cordova-plugin-fcm" commit="f80f44c156dde974f271e24258522bdbca5b17b7"/>
 
     <!-- android -->
     <platform name="android">
@@ -39,7 +39,7 @@
             src="src/android/MessagingService.java"
             target-dir="src/com/andretissot/firebaseextendednotification" />
         <source-file
-            src="src/android/AssetUtil.java"
+            src="src/android/Options.java"
             target-dir="src/com/andretissot/firebaseextendednotification" />
     </platform>
 </plugin>

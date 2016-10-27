@@ -208,7 +208,7 @@ public class Options {
         String drawable = getBaseName(resourcePath);
         try {
             Class<?> cls  = Class.forName(className + ".R$drawable");
-            return (int) cls.getDeclaredField(drawable).get(Integer.class);
+            return (Integer) cls.getDeclaredField(drawable).get(Integer.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

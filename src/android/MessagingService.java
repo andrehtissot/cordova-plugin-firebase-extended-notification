@@ -7,13 +7,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationCompat.InboxStyle;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
+import com.gae.scaffolder.plugin.*;
+
+import org.json.JSONObject;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
@@ -62,8 +63,9 @@ public class MessagingService extends FirebaseMessagingService {
 
     private void setOnClick(Builder builder, Map<String, String> data) {
         Intent intent = new Intent(this, FCMPluginActivity.class)
-//            .putExtra("NOTIFICATION_DATA", data.get("data"))
             .setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        for (Map.Entry<String, String> entry : data.entrySet())
+            intent.putExtra(entry.getKey(), entry.getValue());
         int reqCode = new Random().nextInt();
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
