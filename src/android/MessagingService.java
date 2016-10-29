@@ -50,7 +50,9 @@ public class MessagingService extends FirebaseMessagingService {
     private void setContentTextAndMultiline(Builder builder, Options options) {
         String text = options.getText();
         if(text != null && !text.isEmpty()){
-            builder.setContentText(text).setTicker(text);
+            String ticker = options.getTicker();
+            if(ticker == null) { ticker = text; }
+            builder.setContentText(text).setTicker(ticker);
             return;
         }
         String[] textLines = options.getTextLines();
@@ -66,7 +68,9 @@ public class MessagingService extends FirebaseMessagingService {
             inboxStyle.addLine(line);
         String summary = options.getSummary();
         inboxStyle.setSummaryText(summary);
-        builder.setContentText(summary).setTicker(summary);
+        String ticker = options.getTicker();
+        if(ticker == null) { ticker = summary; }
+        builder.setContentText(summary).setTicker(ticker);
     }
 
     private void setOnClick(Builder builder, Map<String, String> data) {

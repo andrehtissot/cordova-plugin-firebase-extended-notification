@@ -39,6 +39,7 @@ public class Options {
             this.title = resource.getText(resource.getIdentifier("app_name",
                 "string", context.getPackageName())).toString();
         }
+        this.ticker = getString(options, "ticker");
         this.autoCancel = getBool(options, "autoCancel", true);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
@@ -49,6 +50,7 @@ public class Options {
 
     protected int id;
     protected String title;
+    protected String ticker;
     protected String summary;
     protected boolean autoCancel = true;
     protected String[] textLines;
@@ -79,6 +81,10 @@ public class Options {
 
     public String getText() {
         return text;
+    }
+
+    public String getTicker() {
+        return ticker;
     }
 
     public int getSmallIconResourceId() {
