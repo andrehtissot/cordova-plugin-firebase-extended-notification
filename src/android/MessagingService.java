@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Random;
 import com.gae.scaffolder.plugin.*;
 
-import org.json.JSONObject;
-
 /**
  * Created by André Augusto Tissot on 15/10/16.
  */
