@@ -14,27 +14,22 @@ import org.apache.cordova.CordovaInterface;
  */
 
 public class FirebaseExtendedNotification extends CordovaPlugin {
-    static private Map<String, String> lastNotificationData;
-    static private CordovaInterface cordovaInterface;
-    public static void setLastNotificationData(Map<String, String> notificationData){
-        lastNotificationData = notificationData;
+    static private Map<String, Object> lastNotificationTappedData;
+    public static void setLastNotificationTappedData(Map<String, Object> notificationData){
+        lastNotificationTappedData = notificationData;
     }
-    public static Map<String, String> getLastNotificationData(){
-        return lastNotificationData;
-    }
-
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordovaInterface = cordova, webView);
+    public static Map<String, Object> getLastNotificationTappedData(){
+        return lastNotificationTappedData;
     }
 
     public boolean execute(final String action, final JSONArray args,
                            final CallbackContext callbackContext) throws JSONException {
-        if (action.equals("getLastNotificationData")) {
+        if (action.equals("getLastNotificationTappedData")) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
                     try {
-                        Map<String, String> lastNotificationData
-                            = FirebaseExtendedNotification.getLastNotificationData();
+                        Map<String, Object> lastNotificationData
+                            = FirebaseExtendedNotification.getLastNotificationTappedData();
                         if(lastNotificationData == null){
                             callbackContext.error("null value");
                         } else {

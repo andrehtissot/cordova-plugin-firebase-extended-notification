@@ -12,7 +12,6 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationCompat.InboxStyle;
 import java.util.Map;
 import java.util.Random;
-import com.gae.scaffolder.plugin.*;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
@@ -30,7 +29,6 @@ public class MessagingService extends FirebaseMessagingService {
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
         Map<String, String> data = remoteMessage.getData();
-        FirebaseExtendedNotification.setLastNotificationData(data);
         NotificationManager notificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         setContentTextAndMultiline(builder, options);
@@ -73,7 +71,7 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     private void setOnClick(Builder builder, Map<String, String> data) {
-        Intent intent = new Intent(this, FCMPluginActivity.class)
+        Intent intent = new Intent(this, NotificationActivity.class)
             .setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         for (Map.Entry<String, String> entry : data.entrySet())
             intent.putExtra(entry.getKey(), entry.getValue());
