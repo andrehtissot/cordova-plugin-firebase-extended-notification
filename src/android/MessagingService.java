@@ -30,6 +30,7 @@ public class MessagingService extends FirebaseMessagingService {
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
         Map<String, String> data = remoteMessage.getData();
+        FirebaseExtendedNotification.setLastNotificationData(data);
         NotificationManager notificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         setContentTextAndMultiline(builder, options);

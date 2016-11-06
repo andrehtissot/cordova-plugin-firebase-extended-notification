@@ -17,6 +17,9 @@
 
     <author>André Augusto Tissot</author>
 
+    <js-module src="www/FirebaseExtendedNotification.js" name="FirebaseExtendedNotification">
+        <clobbers target="FirebaseExtendedNotification" />
+    </js-module>
     <!-- cordova -->
     <engines>
         <engine name="cordova-android" version=">=4.0.0" />
@@ -35,6 +38,15 @@
                 </intent-filter>
             </service>
         </config-file>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="FirebaseExtendedNotification" >
+                <param name="android-package" value="com.andretissot.firebaseextendednotification.FirebaseExtendedNotification"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <source-file
+            src="src/android/FirebaseExtendedNotification.java"
+            target-dir="src/com/andretissot/firebaseextendednotification" />
         <source-file
             src="src/android/MessagingService.java"
             target-dir="src/com/andretissot/firebaseextendednotification" />
