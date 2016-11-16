@@ -12,17 +12,20 @@ import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationCompat.InboxStyle;
 import java.util.Map;
 import java.util.Random;
+import com.gae.scaffolder.plugin.*;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
  */
 
-public class MessagingService extends FirebaseMessagingService {
+public class MessagingService extends MyFirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if(remoteMessage.getNotification() != null
             || remoteMessage.getData() == null
-            || remoteMessage.getData().get("notificationOptions") == null)
+            || remoteMessage.getData().get("notificationOptions") == null){
+            super.onMessageReceived(remoteMessage);
             return; //does nothing
+        }
         Options options = new Options(remoteMessage.getData().get("notificationOptions"),
                 this.getApplicationContext());
         Builder builder = new Builder(this).setDefaults(0)
