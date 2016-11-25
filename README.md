@@ -25,7 +25,7 @@ This plugin allows a nicer notification without cordova configurations, like the
       "title" : "Title test",
       "id" : 4,
       "text" : "Test message",
-      "smallIcon" : "/platforms/android/res/drawable-mdpi/icon.png",
+      "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
       "autoCancel" : true
     }
@@ -44,7 +44,7 @@ Or if you want more than one line of text when notification is "opened":
       "id" : 4,
       "textLines" : ["Message 1", "Message 2"],
       "summary" : "2 messages",
-      "smallIcon" : "/platforms/android/res/drawable-mdpi/icon.png",
+      "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
       "autoCancel" : true
     }
