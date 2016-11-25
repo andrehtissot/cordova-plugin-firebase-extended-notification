@@ -226,10 +226,9 @@ public class Options {
     }
 
     protected int getResourceIdForDrawable(String className, String resourcePath) {
-        String drawable = getBaseName(resourcePath);
         try {
-            Class<?> cls  = Class.forName(className + ".R$drawable");
-            return (Integer) cls.getDeclaredField(drawable).get(Integer.class);
+            return this.context.getResources().getIdentifier(getBaseName(resourcePath),
+                getResourceTypeName(resourcePath), className);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,6 +243,13 @@ public class Options {
         if (resPath.contains("."))
             drawable = drawable.substring(0, drawable.lastIndexOf('.'));
         return drawable;
+    }
+
+    protected String getResourceTypeName(String resPath) {
+        if(resPath == null) { return null; }
+        if(resPath.contains("/"))
+            return resPath.substring(0, resPath.lastIndexOf('/'));
+        return "drawable";
     }
 
     private Uri getUriForResourcePath(String path) {
