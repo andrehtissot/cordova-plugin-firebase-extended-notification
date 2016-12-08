@@ -20,20 +20,20 @@ import com.gae.scaffolder.plugin.*;
 
 public class MessagingService extends MyFirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
         if(remoteMessage.getNotification() != null
             || remoteMessage.getData() == null
             || remoteMessage.getData().get("notificationOptions") == null){
-            super.onMessageReceived(remoteMessage);
             return; //does nothing
         }
         Options options = new Options(remoteMessage.getData().get("notificationOptions"),
-                this.getApplicationContext());
+            this.getApplicationContext());
         Builder builder = new Builder(this).setDefaults(0)
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
         Map<String, String> data = remoteMessage.getData();
-        NotificationManager notificationManager = (NotificationManager) this
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager
+            = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setContentTextAndMultiline(builder, options);
         setOnClick(builder, data);
         Notification notification;

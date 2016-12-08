@@ -159,9 +159,8 @@ public class Options {
         try {
             return options.getInt(attributeName);
         } catch (JSONException e){
-            e.printStackTrace();
+            return 0;
         }
-        return 0;
     }
 
     protected String getString(JSONObject options, String attributeName){
