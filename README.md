@@ -52,11 +52,10 @@ Or if you want more than one line of text when notification is "opened":
 }
 ```
 
-### Make sure that in Android SDK Manager it is installed:
-
-    Android Support Library version 23 or greater
-    Android Support Repository version 20 or greater
-    Google Play Services version 27 or greater
-    Google Repository version 22 or greater
+#### Make sure that in Android SDK Manager it is installed:
+* Android Support Library version 23 or greater
+* Android Support Repository version 20 or greater
+* Google Play Services version 27 or greater
+* Google Repository version 22 or greater
 
 For a practical example, look into https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification-app-example.
