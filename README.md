@@ -28,7 +28,7 @@ This plugin allows a nicer notification without cordova configurations, like the
       "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
       "autoCancel" : true,
-      "vibrate": [200,300,200,300], //use true instead of array to get the default vibration
+      "vibrate": [200,300,200,300],
       "sound": true
     }
   }
@@ -55,6 +55,8 @@ Or if you want more than one line of text when notification is "opened":
   }
 }
 ```
+
+To get the default vibration, use `true` instead of array.
 
 #### Make sure that in Android SDK Manager it is installed:
 * Android Support Library version 23 or greater
