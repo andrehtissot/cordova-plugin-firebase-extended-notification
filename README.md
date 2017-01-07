@@ -27,7 +27,9 @@ This plugin allows a nicer notification without cordova configurations, like the
       "text" : "Test message",
       "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
-      "autoCancel" : true
+      "autoCancel" : true,
+      "vibrate": [200,300,200,300], //use true instead of array to get the default vibration
+      "sound": true
     }
   }
 }
@@ -46,7 +48,9 @@ Or if you want more than one line of text when notification is "opened":
       "summary" : "2 messages",
       "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
-      "autoCancel" : true
+      "autoCancel" : true,
+      "vibrate": [200,300,200,300],
+      "sound": true
     }
   }
 }
