@@ -44,6 +44,9 @@ public class Options {
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
         this.textLines = getStringArray(options, "textLines");
+        this.vibratePattern = getLongArray(options, "vibrate", null);
+        this.vibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
+        this.sound = getBoolean(options, "sound", true);
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
     }
@@ -56,6 +59,9 @@ public class Options {
     protected String[] textLines;
     protected String text;
     protected int smallIconResourceId;
+    protected boolean vibrate;
+    protected long[] vibratePattern;
+    protected boolean sound;
     protected android.graphics.Bitmap largeIconBitmap;
     protected Context context;
 
@@ -89,6 +95,18 @@ public class Options {
 
     public int getSmallIconResourceId() {
         return smallIconResourceId;
+    }
+
+    public boolean isVibrate() {
+        return vibrate;
+    }
+
+    public boolean isSound() {
+        return sound;
+    }
+
+    public long[] getVibratePattern() {
+        return vibratePattern;
     }
 
     public Bitmap getLargeIconBitmap() {
@@ -163,6 +181,17 @@ public class Options {
         }
     }
 
+    protected boolean getBoolean(JSONObject options, String attributeName, boolean defaultValue){
+        if(options.has(attributeName)){
+            try {
+                return options.getBoolean(attributeName);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return defaultValue;
+    }
+
     protected String getString(JSONObject options, String attributeName){
         return getString(options, attributeName, null);
     }
@@ -215,6 +244,25 @@ public class Options {
             }
         }
         return stringArray;
+    }
+
+    protected long[] getLongArray(JSONObject options, String attributeName, long[] defaultValue){
+        if(!options.has(attributeName))
+            return defaultValue;
+        JSONArray lines;
+        try {
+            lines = options.getJSONArray(attributeName);
+        } catch (JSONException e){
+            e.printStackTrace();
+            return defaultValue;
+        }
+        long[] longArray = new long[lines.length()];
+        for (int i=0;i<lines.length();i++){
+            try {
+                longArray[i] = lines.getLong(i);
+            } catch (JSONException e) {}
+        }
+        return longArray;
     }
 
     protected int getResourceIdForDrawable(String resourcePath) {

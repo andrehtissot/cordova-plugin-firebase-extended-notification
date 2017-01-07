@@ -31,6 +31,8 @@ public class MessagingService extends MyFirebaseMessagingService {
         Builder builder = new Builder(this).setDefaults(0)
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
+        if(options.isVibrate() && options.getVibratePattern() != null)
+            builder.setVibrate(options.getVibratePattern());
         Map<String, String> data = remoteMessage.getData();
         NotificationManager notificationManager
             = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -44,6 +46,10 @@ public class MessagingService extends MyFirebaseMessagingService {
         }
         if(options.isAutoCancel())
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        if(options.isVibrate() && options.getVibratePattern() == null)
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+        if(options.isSound())
+            notification.defaults |= Notification.DEFAULT_SOUND;
         notificationManager.notify(options.getId(), notification);
     }
 
