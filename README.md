@@ -1,6 +1,8 @@
 # cordova-plugin-firebase-extended-notification
 Simple notification message from server as "data" that allows more options as how it will apear to the notified user.
 
+For a practical example, look into https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification-app-example.
+
 The default notification from your server to android devices is limited to the options "body", "title" and "icon", like the exemple below:
 
 ```json
@@ -63,5 +65,3 @@ To get the default vibration, use `true` instead of array.
 * Android Support Repository version 20 or greater
 * Google Play Services version 27 or greater
 * Google Repository version 22 or greater
-
-For a practical example, look into https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification-app-example.
