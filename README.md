@@ -73,7 +73,7 @@ Or if you want to show a big picture when notification is "opened":
       "autoCancel" : true,
       "vibrate": [200,300,200,300],
       "sound": true,
-      "bigPicture" => "https://cloud.githubusercontent.com/assets/7321362/24875178/1e58d2ec-1ddc-11e7-96ed-ed8bf011146c.png"
+      "bigPicture": "https://cloud.githubusercontent.com/assets/7321362/24875178/1e58d2ec-1ddc-11e7-96ed-ed8bf011146c.png"
     }
   }
 }
