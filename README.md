@@ -58,7 +58,30 @@ Or if you want more than one line of text when notification is "opened":
 }
 ```
 
-To get the default vibration, use `true` instead of array.
+Or if you want to show a big picture when notification is "opened":
+```json
+{
+  "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+  "data" : {
+    "dataValuesToGetWhenClickedOn" : 111,
+    "notificationOptions" : {
+      "title" : "Title test",
+      "id" : 4,
+      "text" : "Test message",
+      "smallIcon" : "drawable/icon",
+      "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
+      "autoCancel" : true,
+      "vibrate": [200,300,200,300],
+      "sound": true,
+      "bigPicture" => "https://cloud.githubusercontent.com/assets/7321362/24875178/1e58d2ec-1ddc-11e7-96ed-ed8bf011146c.png"
+    }
+  }
+}
+```
+
+#### Observations:
+* To get the default vibration, use `true` instead of array.
+* At least for now, `bigPicture` and `textLines` are mutually exclusive.
 
 #### Make sure that in Android SDK Manager it is installed:
 * Android Support Library version 23 or greater
