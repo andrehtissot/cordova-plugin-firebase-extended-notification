@@ -2,6 +2,7 @@
 Simple notification message from server as "data" that allows more options as how it will apear to the notified user.
 
 For a practical example, look into https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification-app-example.
+Check the wiki before creating an issue.
 
 The default notification from your server to android devices is limited to the options "body", "title" and "icon", like the exemple below:
 
