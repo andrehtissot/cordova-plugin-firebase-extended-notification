@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationCompat.InboxStyle;
+import android.support.v4.app.NotificationCompat.BigPictureStyle;
 import java.util.Map;
 import java.util.Random;
 import com.gae.scaffolder.plugin.*;
@@ -31,6 +32,8 @@ public class MessagingService extends MyFirebaseMessagingService {
         Builder builder = new Builder(this).setDefaults(0)
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
+        if(options.getBigPictureBitmap() != null)
+            builder.setStyle(new BigPictureStyle().bigPicture(options.getBigPictureBitmap()));
         if(options.isVibrate() && options.getVibratePattern() != null)
             builder.setVibrate(options.getVibratePattern());
         Map<String, String> data = remoteMessage.getData();

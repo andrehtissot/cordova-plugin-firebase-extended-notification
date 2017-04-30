@@ -49,6 +49,7 @@ public class Options {
         this.sound = getBoolean(options, "sound", true);
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
+        this.bigPictureBitmap = this.getBitmapOption(options, "bigPicture");
     }
 
     protected int id;
@@ -63,6 +64,7 @@ public class Options {
     protected long[] vibratePattern;
     protected boolean sound;
     protected android.graphics.Bitmap largeIconBitmap;
+    protected android.graphics.Bitmap bigPictureBitmap;
     protected Context context;
 
     public int getId() {
@@ -113,6 +115,10 @@ public class Options {
         return largeIconBitmap;
     }
 
+    public Bitmap getBigPictureBitmap() {
+        return bigPictureBitmap;
+    }
+
     protected void setSmallIconResourceId(JSONObject options){
         String icon = null;
         if(!options.isNull("smallIcon")){
@@ -133,22 +139,29 @@ public class Options {
     }
 
     protected void setLargeIconBitmap(JSONObject options){
-        int iconId = getResourceIdForDrawable(context.getPackageName(), "icon");
-        if (iconId == 0)
-            iconId = getResourceIdForDrawable("android", "icon");
-        if (iconId == 0)
-            iconId = android.R.drawable.screen_background_dark_transparent;
+        this.largeIconBitmap = this.getBitmapOption(options, "largeIcon");
+        if(this.largeIconBitmap == null){
+            int iconId = getResourceIdForDrawable(context.getPackageName(), "icon");
+            if (iconId == 0)
+                iconId = getResourceIdForDrawable("android", "icon");
+            if (iconId == 0)
+                iconId = android.R.drawable.screen_background_dark_transparent;
+            //uses app default
+            this.largeIconBitmap=BitmapFactory.decodeResource(this.context.getResources(), iconId);
+        }
+    }
+
+    protected android.graphics.Bitmap getBitmapOption(JSONObject options, String optionName){
         String icon = null;
-        if(!options.isNull("largeIcon")){
+        if(!options.isNull(optionName)){
             try{
-                icon = options.getString("largeIcon");
+                icon = options.getString(optionName);
             } catch (JSONException e){
                 e.printStackTrace();
             }
         }
         if(icon == null){
-            this.largeIconBitmap = BitmapFactory.decodeResource(this.context.getResources(), iconId);
-            return; //uses app default
+            return null;
         }
         Uri iconUri = null;
         if (icon.startsWith("res:")) {
@@ -160,17 +173,15 @@ public class Options {
         } else if (icon.startsWith("http")){
             iconUri = getUriFromRemote(icon);
         }
-        if(iconUri == null){
-            this.largeIconBitmap = BitmapFactory.decodeResource(this.context.getResources(), iconId);
-            return; //uses app default
+        if(iconUri != null){
+            try {
+                InputStream input = this.context.getContentResolver().openInputStream(iconUri);
+                return BitmapFactory.decodeStream(input);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        try {
-            InputStream input = this.context.getContentResolver().openInputStream(iconUri);
-            this.largeIconBitmap = BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.largeIconBitmap = BitmapFactory.decodeResource(this.context.getResources(), iconId);
-        }
+        return null;
     }
 
     protected int getInt(JSONObject options, String attributeName){
