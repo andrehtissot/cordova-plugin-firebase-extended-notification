@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-firebase-extended-notification"
-        version="1.3.0">
+        version="1.3.1">
 
     <name>Firebase Extended Notification Cordova Plugin</name>
 
@@ -64,5 +64,6 @@
         <source-file
             src="src/android/Manager.java"
             target-dir="src/com/andretissot/firebaseextendednotification" />
+        <hook type="before_prepare" src="scripts/beforePrepareBuild.js" />
     </platform>
 </plugin>
