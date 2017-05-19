@@ -31,7 +31,7 @@
     <!-- android -->
     <platform name="android">
         <framework src="src/android/FirebaseExtendedNotification.gradle" custom="true" type="gradleReference"/>
-        <config-file target="AndroidManifest.xml" parent="/manifest/application" after="com.gae.scaffolder.plugin.FCMPluginActivity">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:exported="true" android:name="com.andretissot.firebaseextendednotification.NotificationActivity" android:launchMode="singleTop">
                 <intent-filter>
                     <category android:name="android.intent.category.DEFAULT" />
