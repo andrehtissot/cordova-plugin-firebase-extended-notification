@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-firebase-extended-notification"
-        version="1.3.3">
+        version="1.3.4">
 
     <name>Firebase Extended Notification Cordova Plugin</name>
 
@@ -26,7 +26,7 @@
     </engines>
 
     <!-- dependencies -->
-    <dependency id="cordova-plugin-fcm" url="https://github.com/fechanique/cordova-plugin-fcm" commit="03bfc26f3e899b32a1d06c9a56283b025d001995"/>
+    <dependency id="cordova-plugin-fcm" url="https://github.com/andrehtissot/cordova-plugin-fcm" />
 
     <!-- android -->
     <platform name="android">
