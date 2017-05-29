@@ -83,6 +83,10 @@ Or if you want to show a big picture when notification is "opened":
 #### Observations:
 * To get the default vibration, use `true` instead of array.
 * At least for now, `bigPicture` and `textLines` are mutually exclusive.
+* For sound:
+  * To play the default sound, use `true`;
+  * To play a sound from resource, start with `res://`. For example `res://raw/music_mp3` will play the `R.raw.music_mp3` if available.
+  * To play a sound from the web, start with `http://` or `https://`. For example `http://tindeck.com/download/pro/yjuow/Not_That_Guy.mp3` will download the file in cache and play it.
 
 #### Make sure that in Android SDK Manager it is installed:
 * Android Support Library version 23 or greater
