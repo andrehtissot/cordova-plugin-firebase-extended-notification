@@ -6,6 +6,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.support.v4.content.FileProvider;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -45,8 +46,11 @@ public class Options {
         this.text = getString(options, "text");
         this.textLines = getStringArray(options, "textLines");
         this.vibratePattern = getLongArray(options, "vibrate", null);
-        this.vibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
-        this.sound = getBoolean(options, "sound", true);
+        this.doesVibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
+        this.soundUri = getUriOption(options, "sound");
+        if(this.soundUri != null)
+            android.util.Log.d("uriOption", this.soundUri.toString());
+        this.doesSound = this.soundUri!=null || getBoolean(options, "sound", true);
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
         this.bigPictureBitmap = this.getBitmapOption(options, "bigPicture");
@@ -60,11 +64,12 @@ public class Options {
     protected String[] textLines;
     protected String text;
     protected int smallIconResourceId;
-    protected boolean vibrate;
+    protected boolean doesVibrate;
     protected long[] vibratePattern;
-    protected boolean sound;
-    protected android.graphics.Bitmap largeIconBitmap;
-    protected android.graphics.Bitmap bigPictureBitmap;
+    protected Uri soundUri;
+    protected boolean doesSound;
+    protected Bitmap largeIconBitmap;
+    protected Bitmap bigPictureBitmap;
     protected Context context;
 
     public int getId() {
@@ -79,7 +84,7 @@ public class Options {
         return summary;
     }
 
-    public boolean isAutoCancel() {
+    public boolean doesAutoCancel() {
         return autoCancel;
     }
 
@@ -99,16 +104,20 @@ public class Options {
         return smallIconResourceId;
     }
 
-    public boolean isVibrate() {
-        return vibrate;
-    }
-
-    public boolean isSound() {
-        return sound;
+    public boolean doesVibrate() {
+        return this.doesVibrate;
     }
 
     public long[] getVibratePattern() {
         return vibratePattern;
+    }
+
+    public boolean doesSound() {
+        return this.doesSound;
+    }
+
+    public Uri getSoundUri() {
+        return soundUri;
     }
 
     public Bitmap getLargeIconBitmap() {
@@ -151,35 +160,38 @@ public class Options {
         }
     }
 
-    protected android.graphics.Bitmap getBitmapOption(JSONObject options, String optionName){
-        String icon = null;
+    protected Uri getUriOption(JSONObject options, String optionName){
+        String uriSource = null;
         if(!options.isNull(optionName)){
-            try{
-                icon = options.getString(optionName);
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-        }
-        if(icon == null){
-            return null;
-        }
-        Uri iconUri = null;
-        if (icon.startsWith("res:")) {
-            iconUri = getUriForResourcePath(icon);
-        } else if (icon.startsWith("file:///")) {
-            iconUri = getUriFromPath(icon);
-        } else if (icon.startsWith("file://")) {
-            iconUri = getUriFromAsset(icon);
-        } else if (icon.startsWith("http")){
-            iconUri = getUriFromRemote(icon);
-        }
-        if(iconUri != null){
             try {
-                InputStream input = this.context.getContentResolver().openInputStream(iconUri);
-                return BitmapFactory.decodeStream(input);
-            } catch (IOException e) {
+                uriSource = options.getString(optionName);
+                android.util.Log.d("uriOption", uriSource);
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        if(uriSource == null)
+            return null;
+        if (uriSource.startsWith("res:"))
+            return getUriForResourcePath(uriSource);
+        if (uriSource.startsWith("file:///"))
+            return getUriFromPath(uriSource);
+        if (uriSource.startsWith("file://"))
+            return getUriFromAsset(uriSource);
+        if (uriSource.startsWith("http"))
+            return getUriFromRemote(uriSource);
+        return null;
+    }
+
+    protected Bitmap getBitmapOption(JSONObject options, String optionName){
+        Uri iconUri = getUriOption(options, optionName);
+        if(iconUri == null)
+            return null;
+        try {
+            InputStream input = this.context.getContentResolver().openInputStream(iconUri);
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -383,8 +395,7 @@ public class Options {
         try {
             URL url = new URL(path);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             connection.setRequestProperty("Connection", "close");
             connection.setConnectTimeout(5000);
@@ -392,7 +403,8 @@ public class Options {
             InputStream input = connection.getInputStream();
             FileOutputStream outStream = new FileOutputStream(file);
             copyFile(input, outStream);
-            return Uri.fromFile(file);
+            return FileProvider.getUriForFile(this.context,
+                this.context.getApplicationContext().getPackageName() + ".provider", file);
         } catch (Exception e) {
             e.printStackTrace();
         }

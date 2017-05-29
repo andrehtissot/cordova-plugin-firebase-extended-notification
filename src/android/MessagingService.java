@@ -31,14 +31,15 @@ public class MessagingService extends MyFirebaseMessagingService {
             this.getApplicationContext());
         Builder builder = new Builder(this).setDefaults(0)
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
-            .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.isAutoCancel());
+            .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.doesAutoCancel());
         if(options.getBigPictureBitmap() != null)
             builder.setStyle(new BigPictureStyle().bigPicture(options.getBigPictureBitmap()));
-        if(options.isVibrate() && options.getVibratePattern() != null)
+        if(options.doesVibrate() && options.getVibratePattern() != null)
             builder.setVibrate(options.getVibratePattern());
+        if(options.doesSound() && options.getSoundUri() != null)
+            builder.setSound(options.getSoundUri(), android.media.AudioManager.STREAM_NOTIFICATION);
         Map<String, String> data = remoteMessage.getData();
-        NotificationManager notificationManager
-            = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setContentTextAndMultiline(builder, options);
         setOnClick(builder, data);
         Notification notification;
@@ -47,11 +48,11 @@ public class MessagingService extends MyFirebaseMessagingService {
         } else {
             notification = builder.build(); // Notification for Jellybean and above
         }
-        if(options.isAutoCancel())
+        if(options.doesAutoCancel())
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        if(options.isVibrate() && options.getVibratePattern() == null)
+        if(options.doesVibrate() && options.getVibratePattern() == null)
             notification.defaults |= Notification.DEFAULT_VIBRATE;
-        if(options.isSound())
+        if(options.doesSound() && options.getSoundUri() == null)
             notification.defaults |= Notification.DEFAULT_SOUND;
         notificationManager.notify(options.getId(), notification);
     }
