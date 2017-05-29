@@ -1,24 +1,26 @@
 package com.andretissot.firebaseextendednotification;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.support.v4.content.FileProvider;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.StrictMode;
+import android.support.v4.content.FileProvider;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
@@ -41,15 +43,13 @@ public class Options {
                 "string", context.getPackageName())).toString();
         }
         this.ticker = getString(options, "ticker");
-        this.autoCancel = getBool(options, "autoCancel", true);
+        this.autoCancel = getBoolean(options, "autoCancel", true);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
         this.textLines = getStringArray(options, "textLines");
         this.vibratePattern = getLongArray(options, "vibrate", null);
         this.doesVibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
         this.soundUri = getUriOption(options, "sound");
-        if(this.soundUri != null)
-            android.util.Log.d("uriOption", this.soundUri.toString());
         this.doesSound = this.soundUri!=null || getBoolean(options, "sound", true);
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
@@ -165,7 +165,6 @@ public class Options {
         if(!options.isNull(optionName)){
             try {
                 uriSource = options.getString(optionName);
-                android.util.Log.d("uriOption", uriSource);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -227,17 +226,6 @@ public class Options {
             if(string.isEmpty())
                 return defaultValue;
             return string;
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-        return defaultValue;
-    }
-
-    protected boolean getBool(JSONObject options, String attributeName, boolean defaultValue) {
-        if(options.isNull(attributeName))
-            return defaultValue;
-        try {
-            return options.getBoolean(attributeName);
         } catch (JSONException e){
             e.printStackTrace();
         }
@@ -333,7 +321,7 @@ public class Options {
             FileOutputStream outStream = new FileOutputStream(file);
             InputStream inputStream = res.openRawResource(resId);
             copyFile(inputStream, outStream);
-            return Uri.fromFile(file);
+            return getProvidedFileUri(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -344,7 +332,7 @@ public class Options {
         String absPath = path.replaceFirst("file://", "");
         File file = new File(absPath);
         if (file.exists())
-            return Uri.fromFile(file);
+            return getProvidedFileUri(file);
         return null;
     }
 
@@ -359,7 +347,7 @@ public class Options {
             FileOutputStream outStream = new FileOutputStream(file);
             InputStream inputStream = assets.open(resPath);
             copyFile(inputStream, outStream);
-            return Uri.fromFile(file);
+            return getProvidedFileUri(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -388,6 +376,17 @@ public class Options {
         out.close();
     }
 
+    private Uri getProvidedFileUri(File ouputFile){
+        if (Build.VERSION.SDK_INT >= 24) {
+            Uri uriProvided = FileProvider.getUriForFile(this.context,
+                "com.andretissot.firebaseextendednotification.fileprovider", ouputFile);
+            this.context.grantUriPermission("com.android.systemui",
+                uriProvided, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            return uriProvided;
+        }
+        return Uri.fromFile(ouputFile);
+    }
+
     private Uri getUriFromRemote(String path) {
         File file = getTmpFile();
         if (file == null)
@@ -403,8 +402,7 @@ public class Options {
             InputStream input = connection.getInputStream();
             FileOutputStream outStream = new FileOutputStream(file);
             copyFile(input, outStream);
-            return FileProvider.getUriForFile(this.context,
-                this.context.getApplicationContext().getPackageName() + ".provider", file);
+            return getProvidedFileUri(file);
         } catch (Exception e) {
             e.printStackTrace();
         }
