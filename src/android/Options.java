@@ -379,9 +379,8 @@ public class Options {
     private Uri getProvidedFileUri(File ouputFile){
         if (Build.VERSION.SDK_INT >= 24) {
             Uri uriProvided = FileProvider.getUriForFile(this.context,
-                "com.andretissot.firebaseextendednotification.fileprovider", ouputFile);
-            this.context.grantUriPermission("com.android.systemui",
-                uriProvided, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                this.context.getPackageName()+".fileprovider", ouputFile);
+            this.context.grantUriPermission("com.android.systemui", uriProvided, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             return uriProvided;
         }
         return Uri.fromFile(ouputFile);
