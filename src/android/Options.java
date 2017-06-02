@@ -35,7 +35,7 @@ public class Options {
         } catch (JSONException e) {
             return; //invalid json, all will be as default
         }
-        this.id = getInt(options, "id");
+        this.id = getInt(options, "id", 0);
         this.title = getString(options, "title");
         if(this.title == null){
             Resources resource = context.getResources();
@@ -46,6 +46,9 @@ public class Options {
         this.autoCancel = getBoolean(options, "autoCancel", true);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
+        Integer color = getARGB(options, "color");
+        if(this.doesColor = (color != null))
+            this.color = color;
         this.textLines = getStringArray(options, "textLines");
         this.vibratePattern = getLongArray(options, "vibrate", null);
         this.doesVibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
@@ -68,6 +71,8 @@ public class Options {
     protected long[] vibratePattern;
     protected Uri soundUri;
     protected boolean doesSound;
+    protected int color;
+    protected boolean doesColor;
     protected Bitmap largeIconBitmap;
     protected Bitmap bigPictureBitmap;
     protected Context context;
@@ -105,7 +110,7 @@ public class Options {
     }
 
     public boolean doesVibrate() {
-        return this.doesVibrate;
+        return doesVibrate;
     }
 
     public long[] getVibratePattern() {
@@ -113,11 +118,19 @@ public class Options {
     }
 
     public boolean doesSound() {
-        return this.doesSound;
+        return doesSound;
     }
 
     public Uri getSoundUri() {
         return soundUri;
+    }
+
+    public boolean doesColor() {
+        return doesColor;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public Bitmap getLargeIconBitmap() {
@@ -195,11 +208,11 @@ public class Options {
         return null;
     }
 
-    protected int getInt(JSONObject options, String attributeName){
+    protected Integer getInt(JSONObject options, String attributeName, Integer defaultValue){
         try {
             return options.getInt(attributeName);
         } catch (JSONException e){
-            return 0;
+            return defaultValue;
         }
     }
 
@@ -230,6 +243,21 @@ public class Options {
             e.printStackTrace();
         }
         return defaultValue;
+    }
+
+    protected Integer getARGB(JSONObject options, String attributeName){
+        Integer colorInt = getInt(options, attributeName, null);
+        if(colorInt != null)
+            return colorInt;
+        String colorString = getString(options, attributeName);
+        if(colorString == null)
+            return null;
+        if(colorString.matches("^[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$")){
+            try {
+                return Integer.parseInt(colorString, 16);
+            } catch(NumberFormatException e) {}
+        }
+        return null; // other "formats" not yet supported
     }
 
     protected String[] getStringArray(JSONObject options, String attributeName) {
