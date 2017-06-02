@@ -407,7 +407,7 @@ public class Options {
     private Uri getProvidedFileUri(File ouputFile){
         if (Build.VERSION.SDK_INT >= 24) {
             Uri uriProvided = FileProvider.getUriForFile(this.context,
-                this.context.getPackageName()+".fileprovider", ouputFile);
+                this.context.getPackageName()+".fbenfileprovider", ouputFile);
             this.context.grantUriPermission("com.android.systemui", uriProvided, Intent.FLAG_GRANT_READ_URI_PERMISSION);
             return uriProvided;
         }

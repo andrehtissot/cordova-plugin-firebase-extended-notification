@@ -40,7 +40,6 @@ public class MessagingService extends MyFirebaseMessagingService {
             builder.setSound(options.getSoundUri(), android.media.AudioManager.STREAM_NOTIFICATION);
         if (options.doesColor() && Build.VERSION.SDK_INT >= 22)
             builder.setColor(options.getColor());
-            // builder.setColor(0xff0000ff);
         Map<String, String> data = remoteMessage.getData();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setContentTextAndMultiline(builder, options);
