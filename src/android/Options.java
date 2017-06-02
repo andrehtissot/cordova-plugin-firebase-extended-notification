@@ -44,6 +44,7 @@ public class Options {
         }
         this.ticker = getString(options, "ticker");
         this.autoCancel = getBoolean(options, "autoCancel", true);
+        this.openApp = getBoolean(options, "openApp", false);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
         Integer color = getARGB(options, "color");
@@ -63,7 +64,8 @@ public class Options {
     protected String title;
     protected String ticker;
     protected String summary;
-    protected boolean autoCancel = true;
+    protected boolean autoCancel;
+    protected boolean openApp;
     protected String[] textLines;
     protected String text;
     protected int smallIconResourceId;
@@ -91,6 +93,10 @@ public class Options {
 
     public boolean doesAutoCancel() {
         return autoCancel;
+    }
+
+    public boolean doesOpenApp() {
+        return openApp;
     }
 
     public String[] getTextLines() {

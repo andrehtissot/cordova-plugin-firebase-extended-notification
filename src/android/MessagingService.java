@@ -2,6 +2,7 @@ package com.andretissot.firebaseextendednotification;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import android.content.pm.PackageManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -57,6 +58,8 @@ public class MessagingService extends MyFirebaseMessagingService {
         if(options.doesSound() && options.getSoundUri() == null)
             notification.defaults |= Notification.DEFAULT_SOUND;
         notificationManager.notify(options.getId(), notification);
+        if(options.doesOpenApp())
+            openApp();
     }
 
     private void setContentTextAndMultiline(Builder builder, Options options) {
@@ -94,5 +97,12 @@ public class MessagingService extends MyFirebaseMessagingService {
         PendingIntent contentIntent = PendingIntent.getActivity(
                 this, reqCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
+    }
+
+    private void openApp(){
+        PackageManager manager = getPackageManager();
+        Context context = getApplicationContext();
+        Intent launchIntent = manager.getLaunchIntentForPackage(context.getPackageName());
+        context.startActivity(launchIntent);
     }
 }
