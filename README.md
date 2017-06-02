@@ -19,7 +19,7 @@ The default notification from your server to android devices is limited to the o
 References: https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
 
 This plugin allows a nicer notification without cordova configurations, like the example below:
-```json
+```javascript
 {
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
   "data" : {
@@ -32,7 +32,7 @@ This plugin allows a nicer notification without cordova configurations, like the
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
       "autoCancel" : true,
       "vibrate": [200,300,200,300],
-      "color": 0x000000ff,
+      "color": "0000ff",
       "sound": true
     }
   }
@@ -68,7 +68,7 @@ Or if you want to show a big picture when notification is "opened":
     "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
       "id" : 4,
-      ...
+      "...": "...",
       "bigPicture": "https://cloud.githubusercontent.com/assets/7321362/24875178/1e58d2ec-1ddc-11e7-96ed-ed8bf011146c.png"
     }
   }
@@ -81,9 +81,9 @@ Or if you want to open the app when notification is received:
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
   "data" : {
     "dataValuesToGetWhenClickedOn" : 111,
-    "notificationOptions" : {
-      "title" : "Title test",
-      ...
+    "notificationOptions": {
+      "id" : 4,
+      "...": "...",
       "openApp": true
     }
   }
@@ -92,8 +92,8 @@ Or if you want to open the app when notification is received:
 
 
 #### Observations:
-* To get the default vibration, use `true` instead of array.
 * At least for now, `bigPicture` and `textLines` are mutually exclusive.
+* To get the default vibration, use `true` instead of array.
 * To set a background color, use ARGB value as integer like `0x000000ff` (less readable `255`), or as string like `"000000ff"`, with alpha, or `"0000ff"`, without alpha.
 * For sound:
   * To play the default sound, use `true`;
