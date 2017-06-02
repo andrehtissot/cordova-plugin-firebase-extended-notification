@@ -25,13 +25,14 @@ This plugin allows a nicer notification without cordova configurations, like the
   "data" : {
     "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
-      "title" : "Title test",
       "id" : 4,
+      "title" : "Title test",
       "text" : "Test message",
       "smallIcon" : "drawable/icon",
       "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
       "autoCancel" : true,
       "vibrate": [200,300,200,300],
+      "color": 0x000000ff,
       "sound": true
     }
   }
@@ -45,8 +46,8 @@ Or if you want more than one line of text when notification is "opened":
   "data" : {
     "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
-      "title" : "Title test",
       "id" : 4,
+      "title" : "Title test",
       "textLines" : ["Message 1", "Message 2"],
       "summary" : "2 messages",
       "smallIcon" : "drawable/icon",
@@ -66,23 +67,34 @@ Or if you want to show a big picture when notification is "opened":
   "data" : {
     "dataValuesToGetWhenClickedOn" : 111,
     "notificationOptions" : {
-      "title" : "Title test",
       "id" : 4,
-      "text" : "Test message",
-      "smallIcon" : "drawable/icon",
-      "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
-      "autoCancel" : true,
-      "vibrate": [200,300,200,300],
-      "sound": true,
+      ...
       "bigPicture": "https://cloud.githubusercontent.com/assets/7321362/24875178/1e58d2ec-1ddc-11e7-96ed-ed8bf011146c.png"
     }
   }
 }
 ```
 
+Or if you want to open the app when notification is received:
+```json
+{
+  "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+  "data" : {
+    "dataValuesToGetWhenClickedOn" : 111,
+    "notificationOptions" : {
+      "title" : "Title test",
+      ...
+      "openApp": true
+    }
+  }
+}
+```
+
+
 #### Observations:
 * To get the default vibration, use `true` instead of array.
 * At least for now, `bigPicture` and `textLines` are mutually exclusive.
+* To set a background color, use ARGB value as integer like `0x000000ff` (less readable `255`), or as string like `"000000ff"`, with alpha, or `"0000ff"`, without alpha.
 * For sound:
   * To play the default sound, use `true`;
   * To play a sound from resource, start with `res://`. For example `res://raw/music_mp3` will play the `R.raw.music_mp3` if available.
