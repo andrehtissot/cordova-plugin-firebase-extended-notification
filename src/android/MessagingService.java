@@ -12,6 +12,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.app.NotificationCompat.InboxStyle;
 import android.support.v4.app.NotificationCompat.BigPictureStyle;
+import android.support.v4.app.NotificationCompat.BigTextStyle;
 import java.util.Map;
 import java.util.Random;
 import com.gae.scaffolder.plugin.*;
@@ -46,7 +47,7 @@ public class MessagingService extends MyFirebaseMessagingService {
         setContentTextAndMultiline(builder, options);
         setOnClick(builder, data);
         Notification notification;
-        if (Build.VERSION.SDK_INT <= 15) {
+        if (Build.VERSION.SDK_INT < 16) {
             notification = builder.getNotification(); // Notification for HoneyComb to ICS
         } else {
             notification = builder.build(); // Notification for Jellybean and above
@@ -63,6 +64,12 @@ public class MessagingService extends MyFirebaseMessagingService {
     }
 
     private void setContentTextAndMultiline(Builder builder, Options options) {
+        String bigText = options.getBigText();
+        if(bigText != null && !bigText.isEmpty()){
+            builder.setStyle(new BigTextStyle().bigText(bigText).setSummaryText(options.getSummary()));
+            builder.setContentText(options.getSummary()).setTicker(options.getTicker());
+            return;
+        }
         String text = options.getText();
         if(text != null && !text.isEmpty()){
             String ticker = options.getTicker();
@@ -75,14 +82,16 @@ public class MessagingService extends MyFirebaseMessagingService {
             return;
         }
         if(textLines.length == 1) {
-            builder.setContentText(textLines[0]).setTicker(textLines[0]);
+            String ticker = options.getTicker();
+            if(ticker == null) { ticker = textLines[0]; }
+            builder.setContentText(textLines[0]).setTicker(ticker);
             return;
         }
-        InboxStyle inboxStyle = new InboxStyle(builder);
+        InboxStyle inboxStyle = new InboxStyle();
         for(String line : textLines)
             inboxStyle.addLine(line);
         String summary = options.getSummary();
-        inboxStyle.setSummaryText(summary);
+        builder.setStyle(inboxStyle.setSummaryText(summary));
         String ticker = options.getTicker();
         if(ticker == null) { ticker = summary; }
         builder.setContentText(summary).setTicker(ticker);

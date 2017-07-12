@@ -47,6 +47,7 @@ public class Options {
         this.openApp = getBoolean(options, "openApp", false);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
+        this.bigText = getString(options, "bigText");
         Integer color = getARGB(options, "color");
         if(this.doesColor = (color != null))
             this.color = color;
@@ -68,6 +69,7 @@ public class Options {
     protected boolean openApp;
     protected String[] textLines;
     protected String text;
+    protected String bigText;
     protected int smallIconResourceId;
     protected boolean doesVibrate;
     protected long[] vibratePattern;
@@ -105,6 +107,10 @@ public class Options {
 
     public String getText() {
         return text;
+    }
+
+    public String getBigText() {
+        return bigText;
     }
 
     public String getTicker() {
