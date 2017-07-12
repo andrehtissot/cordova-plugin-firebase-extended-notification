@@ -60,6 +60,21 @@ Or if you want more than one line of text when notification is "opened":
 }
 ```
 
+Or if you want to show a big text when notification is "opened":
+```json
+{
+  "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+  "data" : {
+    "dataValuesToGetWhenClickedOn" : 111,
+    "notificationOptions" : {
+      "id" : 4,
+      "...": "...",
+      "bigText": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mollis urna sed nisl venenatis, a tincidunt orci iaculis. In hac habitasse platea dictumst. Nulla quis hendrerit risus. Morbi neque lectus, laoreet quis dui quis, luctus blandit mauris. Sed ullamcorper risus et lorem facilisis, sit amet tristique nulla rutrum. Vivamus auctor pulvinar ligula, tempor lacinia arcu commodo in. Ut condimentum dolor ac felis venenatis, sit amet cursus erat accumsan. Aliquam a justo elit. Maecenas dignissim suscipit ipsum, nec laoreet velit."
+    }
+  }
+}
+```
+
 Or if you want to show a big picture when notification is "opened":
 ```json
 {
@@ -92,7 +107,7 @@ Or if you want to open the app when notification is received:
 
 
 #### Observations:
-* At least for now, `bigPicture` and `textLines` are mutually exclusive.
+* At least for now, `bigPicture`, `bigText` and `textLines` are mutually exclusive.
 * To get the default vibration, use `true` instead of array.
 * To set a background color, use ARGB value as integer like `0x000000ff` (less readable `255`), or as string like `"000000ff"`, with alpha, or `"0000ff"`, without alpha.
 * For sound:
