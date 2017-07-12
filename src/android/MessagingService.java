@@ -65,12 +65,12 @@ public class MessagingService extends MyFirebaseMessagingService {
 
     private void setContentTextAndMultiline(Builder builder, Options options) {
         String bigText = options.getBigText();
+        String text = options.getText();
         if(bigText != null && !bigText.isEmpty()){
             builder.setStyle(new BigTextStyle().bigText(bigText).setSummaryText(options.getSummary()));
-            builder.setContentText(options.getSummary()).setTicker(options.getTicker());
+            builder.setContentText(text).setTicker(options.getTicker());
             return;
         }
-        String text = options.getText();
         if(text != null && !text.isEmpty()){
             String ticker = options.getTicker();
             if(ticker == null) { ticker = text; }
