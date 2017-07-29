@@ -105,11 +105,23 @@ Or if you want to open the app when notification is received:
 }
 ```
 
+#### Creating notifications locally
+From the version 1.7.0 on, it's now possible to "simulate" the extended Firebase support using the same options, called like:
+```javascript
+FirebaseExtendedNotification.showNotification({
+  "dataValuesToGetWhenClickedOn" : 111
+}, {
+  "title" : "Title test",
+  "textLines" : ["Message 1", "Message 2"],
+  "summary" : "2 messages",
+  "..." : "..."
+});
+```
 
 #### Observations:
 * At least for now, `bigPicture`, `bigText` and `textLines` are mutually exclusive.
 * To get the default vibration, use `true` instead of array.
-* To set a background color, use ARGB value as integer like `0x000000ff` (less readable `255`), or as string like `"000000ff"`, with alpha, or `"0000ff"`, without alpha.
+* To set a background color, use ARGB value as integer like `0x000000ff` (less readable `255`), or as string like `"000000ff"`, with alpha, or `"0000ff"`, without alpha, or for convenience `"#0000ff"`.
 * For sound:
   * To play the default sound, use `true`;
   * To play a sound from resource, start with `res://`. For example `res://raw/music_mp3` will play the `R.raw.music_mp3` if available.
