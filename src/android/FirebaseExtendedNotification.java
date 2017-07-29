@@ -1,13 +1,10 @@
 package com.andretissot.firebaseextendednotification;
 
-import org.json.JSONArray;
-import java.util.Map;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaInterface;
+import java.util.*;
+import org.json.*;
+
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
@@ -66,6 +63,19 @@ public class FirebaseExtendedNotification extends CordovaPlugin {
                         if(manager.notificationExists(args.getInt(0)))
                             callbackContext.success(1);
                         else callbackContext.success(0);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                        callbackContext.error(e.getMessage());
+                    }
+                }
+            });
+        } else if (action.equals("showNotification")) {
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        JSONObject dataJSON = args.getJSONObject(0), optionsJSON = args.getJSONObject(1);
+                        dataJSON.put("notificationOptions", optionsJSON);
+                        new Manager(cordova.getActivity()).showNotification(dataJSON, optionsJSON);
                     } catch (Exception e){
                         e.printStackTrace();
                         callbackContext.error(e.getMessage());

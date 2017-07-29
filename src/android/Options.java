@@ -18,23 +18,15 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.*;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.
  */
 
 public class Options {
-    public Options(String optionsToParse, Context context){
+    public Options(JSONObject options, Context context){
         this.context = context;
-        JSONObject options;
-        try {
-            options = new JSONObject(optionsToParse);
-        } catch (JSONException e) {
-            return; //invalid json, all will be as default
-        }
         this.id = getInt(options, "id", 0);
         this.title = getString(options, "title");
         if(this.title == null){
@@ -264,6 +256,8 @@ public class Options {
         String colorString = getString(options, attributeName);
         if(colorString == null)
             return null;
+        if(colorString.charAt(0) == '#')
+            colorString = colorString.substring(1);
         if(colorString.matches("^[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$")){
             try {
                 return Integer.parseInt(colorString, 16);

@@ -2,9 +2,7 @@ package com.andretissot.firebaseextendednotification;
 
 import android.os.Bundle;
 import com.gae.scaffolder.plugin.*;
-
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Created by André Augusto Tissot on 15/10/16.

@@ -1,5 +1,5 @@
 var exec = require('cordova/exec');
-module.exports = FirebaseExtendedNotification = {
+module.exports = {
   getLastNotificationTappedData: function(success, error){
     exec(success, error, 'FirebaseExtendedNotification', 'getLastNotificationTappedData', []);
   },
@@ -10,4 +10,8 @@ module.exports = FirebaseExtendedNotification = {
     exec(function(answer){ success(answer === 1); }, error,
       'FirebaseExtendedNotification', 'notificationExists', [notificationId]);
   },
+  showNotification: function(dataToReturn, notificationOptions, success, error){
+    exec(function(answer){ success(answer === 1); }, error,
+      'FirebaseExtendedNotification', 'showNotification', [dataToReturn, notificationOptions]);
+  }
 };
