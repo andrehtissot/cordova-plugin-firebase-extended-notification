@@ -54,6 +54,10 @@ public class Manager {
             builder.setStyle(new BigPictureStyle().bigPicture(options.getBigPictureBitmap()));
         if(options.doesVibrate() && options.getVibratePattern() != null)
             builder.setVibrate(options.getVibratePattern());
+        else if (Build.VERSION.SDK_INT >= 21 && options.doesHeadsUp())
+            builder.setVibrate(new long[0]);
+        if(options.doesHeadsUp())
+            builder.setPriority(Notification.PRIORITY_HIGH);
         if(options.doesSound() && options.getSoundUri() != null)
             builder.setSound(options.getSoundUri(), android.media.AudioManager.STREAM_NOTIFICATION);
         if (options.doesColor() && Build.VERSION.SDK_INT >= 22)

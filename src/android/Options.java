@@ -37,6 +37,7 @@ public class Options {
         this.ticker = getString(options, "ticker");
         this.autoCancel = getBoolean(options, "autoCancel", true);
         this.openApp = getBoolean(options, "openApp", false);
+        this.headsUp = getBoolean(options, "headsUp", false);
         this.summary = getString(options, "summary");
         this.text = getString(options, "text");
         this.bigText = getString(options, "bigText");
@@ -59,6 +60,7 @@ public class Options {
     protected String summary;
     protected boolean autoCancel;
     protected boolean openApp;
+    protected boolean headsUp;
     protected String[] textLines;
     protected String text;
     protected String bigText;
@@ -91,6 +93,10 @@ public class Options {
 
     public boolean doesOpenApp() {
         return openApp;
+    }
+
+    public boolean doesHeadsUp() {
+        return headsUp;
     }
 
     public String[] getTextLines() {
