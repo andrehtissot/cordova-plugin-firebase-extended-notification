@@ -33,6 +33,7 @@ This plugin allows a nicer notification without cordova configurations, like the
       "autoCancel" : true,
       "vibrate": [200,300,200,300],
       "color": "0000ff",
+      "headsUp": true,
       "sound": true
     }
   }
