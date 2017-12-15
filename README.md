@@ -1,4 +1,8 @@
 # cordova-plugin-firebase-extended-notification
+[![npm](https://img.shields.io/npm/dt/cordova-plugin-firebase-extended-notification.svg)](https://www.npmjs.com/package/cordova-plugin-firebase-extended-notification)
+[![npm](https://img.shields.io/npm/v/cordova-plugin-firebase-extended-notification.svg)](https://www.npmjs.com/package/cordova-plugin-firebase-extended-notification)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Simple notification message from server as "data" that allows more options as how it will apear to the notified user.
 
 For a practical example, look into https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification-app-example.
