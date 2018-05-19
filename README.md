@@ -110,6 +110,24 @@ Or if you want to open the app when notification is received:
 }
 ```
 
+#### Channels for Android 8+
+From the version 1.9.0 on, it's possible to define in which notification channel the notification will be linked to:
+```json
+{
+  "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+  "data" : {
+    "dataValuesToGetWhenClickedOn" : 111,
+    "notificationOptions": {
+      "id" : 4,
+      "...": "...",
+      "channelId": "music",
+      "channelName": "Music",
+      "channelDescription": "Notifications for new musics available"
+    }
+  }
+}
+```
+
 #### Creating notifications locally
 From the version 1.7.0 on, it's now possible to "simulate" the extended Firebase support using the same options, called like:
 ```javascript
