@@ -45,13 +45,16 @@ public class Options {
         if(this.doesColor = (color != null))
             this.color = color;
         this.textLines = getStringArray(options, "textLines");
-        this.vibratePattern = getLongArray(options, "vibrate", null);
+        this.vibratePattern = getLongArray(options, "vibrate", null, true);
         this.doesVibrate = this.vibratePattern!=null || getBoolean(options, "vibrate", true);
         this.soundUri = getUriOption(options, "sound");
         this.doesSound = this.soundUri!=null || getBoolean(options, "sound", true);
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
-        this.bigPictureBitmap = this.getBitmapOption(options, "bigPicture");
+        this.bigPictureBitmap = getBitmapOption(options, "bigPicture");
+        this.channelId = getString(options, "channelId", "default");
+        this.channelName = getString(options, "channelName", "Default");
+        this.channelDescription = getString(options, "channelDescription", "");
     }
 
     protected int id;
@@ -74,6 +77,9 @@ public class Options {
     protected Bitmap largeIconBitmap;
     protected Bitmap bigPictureBitmap;
     protected Context context;
+    protected String channelName;
+    protected String channelId;
+    protected String channelDescription;
 
     public int getId() {
         return id;
@@ -149,6 +155,18 @@ public class Options {
 
     public Bitmap getBigPictureBitmap() {
         return bigPictureBitmap;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public String getChannelName() {
+        return channelName;
+    }
+
+    public String getChannelDescription() {
+        return channelDescription;
     }
 
     protected void setSmallIconResourceId(JSONObject options){
@@ -297,21 +315,27 @@ public class Options {
         return stringArray;
     }
 
-    protected long[] getLongArray(JSONObject options, String attributeName, long[] defaultValue){
+    protected long[] getLongArray(JSONObject options, String attributeName, long[] defaultValue, boolean supressExceptions){
         if(!options.has(attributeName))
             return defaultValue;
         JSONArray lines;
         try {
             lines = options.getJSONArray(attributeName);
         } catch (JSONException e){
-            e.printStackTrace();
+            if(!supressExceptions) {
+                e.printStackTrace();
+            }
             return defaultValue;
         }
         long[] longArray = new long[lines.length()];
         for (int i=0;i<lines.length();i++){
             try {
                 longArray[i] = lines.getLong(i);
-            } catch (JSONException e) {}
+            } catch (JSONException e) {
+                if(!supressExceptions) {
+                    e.printStackTrace();
+                }
+            }
         }
         return longArray;
     }

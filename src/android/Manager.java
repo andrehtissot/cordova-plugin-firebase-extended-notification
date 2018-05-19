@@ -1,14 +1,18 @@
 package com.andretissot.firebaseextendednotification;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Notification.BigPictureStyle;
+import android.app.Notification.BigTextStyle;
+import android.app.Notification.InboxStyle;
+import android.app.Notification.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
-import android.support.v4.app.NotificationCompat.*;
 import com.gae.scaffolder.plugin.*;
 import java.util.*;
 import org.json.*;
@@ -47,7 +51,14 @@ public class Manager {
 
     public void showNotification(JSONObject dataToReturnOnClick, JSONObject notificationOptions){
         Options options = new Options(notificationOptions, this.context.getApplicationContext());
-        Builder builder = new Builder(this.context).setDefaults(0)
+        this.createNotificationChannel(options);
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this.context, options.getChannelId());
+        } else {
+            builder = new Notification.Builder(this.context);
+        }
+        builder.setDefaults(0)
             .setContentTitle(options.getTitle()).setSmallIcon(options.getSmallIconResourceId())
             .setLargeIcon(options.getLargeIconBitmap()).setAutoCancel(options.doesAutoCancel());
         if(options.getBigPictureBitmap() != null)
@@ -62,8 +73,6 @@ public class Manager {
             builder.setSound(options.getSoundUri(), android.media.AudioManager.STREAM_NOTIFICATION);
         if (options.doesColor() && Build.VERSION.SDK_INT >= 22)
             builder.setColor(options.getColor());
-        NotificationManager notificationManager
-            = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);
         this.setContentTextAndMultiline(builder, options);
         this.setOnClick(builder, dataToReturnOnClick);
         Notification notification;
@@ -78,6 +87,8 @@ public class Manager {
             notification.defaults |= Notification.DEFAULT_VIBRATE;
         if(options.doesSound() && options.getSoundUri() == null)
             notification.defaults |= Notification.DEFAULT_SOUND;
+        NotificationManager notificationManager
+            = (NotificationManager) this.context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(options.getId(), notification);
         if(options.doesOpenApp())
             openApp();
@@ -141,5 +152,19 @@ public class Manager {
         Context context = this.context.getApplicationContext();
         Intent launchIntent = manager.getLaunchIntentForPackage(context.getPackageName());
         context.startActivity(launchIntent);
+    }
+
+    private void createNotificationChannel(Options options) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(options.getChannelId(), options.getChannelName(), importance);
+            channel.setDescription(options.getChannelDescription());
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = this.context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }
