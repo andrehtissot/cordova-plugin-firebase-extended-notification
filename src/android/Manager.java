@@ -67,8 +67,9 @@ public class Manager {
             builder.setVibrate(options.getVibratePattern());
         else if (Build.VERSION.SDK_INT >= 21 && options.doesHeadsUp())
             builder.setVibrate(new long[0]);
-        if(options.doesHeadsUp())
+        if(options.doesHeadsUp()) {
             builder.setPriority(Notification.PRIORITY_HIGH);
+        }
         if(options.doesSound() && options.getSoundUri() != null)
             builder.setSound(options.getSoundUri(), android.media.AudioManager.STREAM_NOTIFICATION);
         if (options.doesColor() && Build.VERSION.SDK_INT >= 22)
@@ -159,7 +160,13 @@ public class Manager {
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            if(options.doesHeadsUp()) {
+                importance = NotificationManager.IMPORTANCE_HIGH;
+            }
             NotificationChannel channel = new NotificationChannel(options.getChannelId(), options.getChannelName(), importance);
+            if(options.doesHeadsUp()) {
+                channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            }
             channel.setDescription(options.getChannelDescription());
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this

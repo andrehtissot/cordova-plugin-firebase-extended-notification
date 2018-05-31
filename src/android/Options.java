@@ -52,8 +52,8 @@ public class Options {
         this.setSmallIconResourceId(options);
         this.setLargeIconBitmap(options);
         this.bigPictureBitmap = getBitmapOption(options, "bigPicture");
-        this.channelId = getString(options, "channelId", "default");
-        this.channelName = getString(options, "channelName", "Default");
+        this.channelId = getString(options, "channelId", "notification");
+        this.channelName = getString(options, "channelName", "Notification");
         this.channelDescription = getString(options, "channelDescription", "");
     }
 
