@@ -134,7 +134,7 @@ From the version 1.9.0 on, it's possible to define in which notification channel
 ```
 
 #### Creating notifications locally
-From the version 1.7.0 on, it's now possible to "simulate" the extended Firebase support using the same options, called like:
+From the version 1.7.0 on, it's possible to "simulate" the extended Firebase support using the same options, called like:
 ```javascript
 FirebaseExtendedNotification.showNotification({
   "dataValuesToGetWhenClickedOn" : 111
@@ -144,6 +144,29 @@ FirebaseExtendedNotification.showNotification({
   "summary" : "2 messages",
   "..." : "..."
 });
+```
+
+#### JSON.stringified notificationOptions
+From the version 1.10.0 on, it's possible to send as string instead of object, called like:
+```javascript
+{
+  "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
+  "data" : {
+    "dataValuesToGetWhenClickedOn" : 111,
+    "notificationOptions" : JSON.stringify({
+      "id" : 4,
+      "title" : "Title test",
+      "text" : "Test message",
+      "smallIcon" : "drawable/icon",
+      "largeIcon" : "https://avatars2.githubusercontent.com/u/1174345?v=3&s=96",
+      "autoCancel" : true,
+      "vibrate": [200,300,200,300],
+      "color": "0000ff",
+      "headsUp": true,
+      "sound": true
+    })
+  }
+}
 ```
 
 #### Observations:
