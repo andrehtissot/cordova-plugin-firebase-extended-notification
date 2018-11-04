@@ -11,6 +11,7 @@ import android.app.Notification.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.AudioAttributes;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
 import com.gae.scaffolder.plugin.*;
@@ -162,12 +163,20 @@ public class Manager {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             if(options.doesHeadsUp()) {
                 importance = NotificationManager.IMPORTANCE_HIGH;
+            } else if(!options.doesSound()) {
+                importance = NotificationManager.IMPORTANCE_LOW;
             }
             NotificationChannel channel = new NotificationChannel(options.getChannelId(), options.getChannelName(), importance);
             if(options.doesHeadsUp()) {
                 channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             }
             channel.setDescription(options.getChannelDescription());
+            if(options.doesSound() && options.getSoundUri() != null) {
+                AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                        .setLegacyStreamType(android.media.AudioManager.STREAM_NOTIFICATION)
+                        .build();
+                channel.setSound(options.getSoundUri(), audioAttributes);
+            }
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = this.context.getSystemService(NotificationManager.class);
