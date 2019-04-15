@@ -7,6 +7,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/andrehtissot/cordova-plugin-firebase-extended-notification.svg)](https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification/network)
 [![GitHub stars](https://img.shields.io/github/stars/andrehtissot/cordova-plugin-firebase-extended-notification.svg)](https://github.com/andrehtissot/cordova-plugin-firebase-extended-notification/stargazers)
 [![Known Vulnerabilities](https://snyk.io/test/github/andrehtissot/cordova-plugin-firebase-extended-notification/badge.svg?targetFile=package.json)](https://snyk.io/test/github/andrehtissot/cordova-plugin-firebase-extended-notification?targetFile=package.json)
+[![DeepScan grade](https://deepscan.io/api/teams/3417/projects/5070/branches/39497/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=3417&pid=5070&bid=39497)
 
 Simple notification message from server as "data" that allows more options as how it will apear to the notified user.
 
