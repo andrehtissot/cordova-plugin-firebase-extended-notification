@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-firebase-extended-notification",
   "cordova_name": "Firebase Extended Notification Cordova Plugin",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple notification message from server as \"data\" that allows more options as how it will apear to the notified user.",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
   ],
   "engines": [],
   "dependencies": {
-    "cordova-plugin-fcm-with-dependecy-updated": "~3.0.0"
+    "cordova-plugin-fcm-with-dependecy-updated": "~3.2.0"
   },
   "author": "André Augusto Tissot",
   "license": "MIT",

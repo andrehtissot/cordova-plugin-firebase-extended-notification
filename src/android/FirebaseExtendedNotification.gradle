@@ -1,20 +1,27 @@
 buildscript {
     repositories {
+        google()
         jcenter()
-        mavenLocal()
+        maven {
+            url 'https://jitpack.io'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.+'
-        classpath 'com.google.gms:google-services:4.1.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.google.gms:google-services:4.2.0'
     }
 }
-repositories {
-    jcenter()
-}
-dependencies {
-    implementation 'com.google.firebase:firebase-core:16.0.9'
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
 }
 
 // apply plugin: 'com.google.gms.google-services'
 // class must be used instead of id(string) to be able to apply plugin from non-root gradle file
-apply plugin: com.google.gms.googleservices.GoogleServicesPlugin
+// apply plugin: com.google.gms.googleservices.GoogleServicesPlugin
