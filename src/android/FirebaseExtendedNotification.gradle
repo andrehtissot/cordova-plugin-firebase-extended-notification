@@ -1,14 +1,24 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+def GRADLE_TOOLS_VERSION = System.getenv("GRADLE_TOOLS_VERSION") ?: '3.5.3'
+def GOOGLE_SERVICES_VERSION = System.getenv("GOOGLE_SERVICES_VERSION") ?: '4.3.3'
+
 buildscript {
     repositories {
         google()
         jcenter()
+
         maven {
             url 'https://jitpack.io'
         }
+        
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
-        classpath 'com.google.gms:google-services:4.2.0'
+        classpath "com.android.tools.build:gradle:${GRADLE_TOOLS_VERSION}"
+        classpath "com.google.gms:google-services:${GOOGLE_SERVICES_VERSION}"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
@@ -16,12 +26,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+
         maven {
             url 'https://jitpack.io'
         }
     }
 }
-
-// apply plugin: 'com.google.gms.google-services'
-// class must be used instead of id(string) to be able to apply plugin from non-root gradle file
-// apply plugin: com.google.gms.googleservices.GoogleServicesPlugin

@@ -22,11 +22,11 @@
     </js-module>
     <!-- cordova -->
     <engines>
-        <engine name="cordova-android" version=">=4.0.0" />
+        <engine name="cordova-android" version=">=8.0.0" />
     </engines>
 
     <!-- dependencies -->
-    <dependency id="cordova-plugin-fcm-with-dependecy-updated" version=">=4.0.0" />
+    <dependency id="cordova-plugin-fcm-with-dependecy-updated" version=">=6.3.0" />
 
     <!-- android -->
     <platform name="android">
@@ -42,7 +42,7 @@
                     <action android:name="com.google.firebase.MESSAGING_EVENT"/>
                 </intent-filter>
             </service>
-            <provider android:name="android.support.v4.content.FileProvider"
+            <provider android:name="androidx.core.content.FileProvider"
                 android:authorities="$PACKAGE_NAME.fbenfileprovider"
                 android:exported="false"
                 android:grantUriPermissions="true">

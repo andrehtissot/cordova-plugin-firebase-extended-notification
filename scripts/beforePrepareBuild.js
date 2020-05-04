@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-var removeText = function(sourceText, stringToRemove) {
+var removeText = function (sourceText, stringToRemove) {
   var text = sourceText;
   var textLenght = 0;
   while (text.length != textLenght) {
@@ -10,8 +10,8 @@ var removeText = function(sourceText, stringToRemove) {
   return text;
 };
 
-var prepareBuild = function(filePath) {
-  fs.readFile(filePath, "utf8", function(err, sourceText) {
+var prepareBuild = function (filePath) {
+  fs.readFile(filePath, "utf8", function (err, sourceText) {
     if (err) return; // On error, fail silently.
     var text = removeText(
       sourceText,
@@ -32,13 +32,13 @@ var prepareBuild = function(filePath) {
             </intent-filter>\n\
         </service>\n'
     );
-    fs.writeFile(filePath, text, function(err) {
+    fs.writeFile(filePath, text, function (err) {
       if (err) return; // On error, fail silently.
     });
   });
 };
 
-module.exports = function(context) {
+module.exports = function (context) {
   var filePath =
     context.opts.projectRoot +
     "/platforms/android/app/src/main/AndroidManifest.xml";
