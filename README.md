@@ -101,7 +101,7 @@ Or if you want to show a big picture when notification is "opened":
 }
 ```
 
-Or if you want to open the app when notification is received [⚠️ DEPRECATED ⚠️] :
+Or if you want to open the app when notification is received ⚠️DEPRECATED⚠️ :
 ```json
 {
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
