@@ -101,7 +101,7 @@ Or if you want to show a big picture when notification is "opened":
 }
 ```
 
-Or if you want to open the app when notification is received:
+Or if you want to open the app when notification is received [⚠️ DEPRECATED ⚠️] :
 ```json
 {
   "to" : "bk3RNwTe3H0:CI2k_HHwgIpoDKCIZvvDMExUdFQ3P1...",
@@ -115,6 +115,9 @@ Or if you want to open the app when notification is received:
   }
 }
 ```
+
+The openApp feature will not work on Android 10 due to added restrictions: https://developer.android.com/guide/components/activities/background-starts
+
 
 #### Channels for Android 8+
 From the version 1.9.0 on, it's possible to define in which notification channel the notification will be linked to:
